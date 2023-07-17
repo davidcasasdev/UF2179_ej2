@@ -24,6 +24,8 @@ import javax.swing.border.EmptyBorder;
 import clases.Autocar;
 import net.miginfocom.swing.MigLayout;
 import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 public class VentanaAutocares extends JFrame {
 
@@ -35,7 +37,7 @@ public class VentanaAutocares extends JFrame {
 	
 	private ArrayList<Autocar> listaAutocares;
 	private JSpinner spinner;
-	private JTextArea textArea;
+	private JTable table;
 
 	/**
 	 * Launch the application.
@@ -137,16 +139,41 @@ public class VentanaAutocares extends JFrame {
 		JScrollPane scrollPane = new JScrollPane();
 		contentPane.add(scrollPane, "cell 0 5 5 1,grow");
 		
-		textArea = new JTextArea();
-		scrollPane.setViewportView(textArea);
-		textArea.setEditable(false);
+		table = new JTable();
+		table.setModel(new DefaultTableModel(
+			new Object[][] {
+			},
+			new String[] {
+				"Matr\u00EDcula", "Modelo", "Marca", "Kil\u00F3metros", "N\u00FAmero de plazas"
+			}
+		) {
+			Class[] columnTypes = new Class[] {
+				String.class, String.class, String.class, Integer.class, Integer.class
+			};
+			public Class getColumnClass(int columnIndex) {
+				return columnTypes[columnIndex];
+			}
+			boolean[] columnEditables = new boolean[] {
+				false, false, true, false, false
+			};
+			public boolean isCellEditable(int row, int column) {
+				return columnEditables[column];
+			}
+		});
+		table.getColumnModel().getColumn(4).setPreferredWidth(122);
+		scrollPane.setViewportView(table);
 	}
 
 	protected void mostrarDatos() {
-		textArea.setText("");
+		DefaultTableModel modelo = (DefaultTableModel) table.getModel();
+		modelo.setRowCount(0);
 		for (Autocar autocar : listaAutocares) {
-			textArea.setText(textArea.getText()+autocar+"\n");
-			textArea.setText(textArea.getText()+"-----------------\n");
+			Object [] fila = {
+					autocar.getMatricula(),autocar.getMarca(),
+					autocar.getModelo(), autocar.getKilometros(),
+					autocar.getNumPlazas()
+			};
+			modelo.addRow(fila);
 		}
 		
 	}
@@ -193,7 +220,4 @@ public class VentanaAutocares extends JFrame {
 		this.listaAutocares.add(a);
 	}
 
-	protected JTextArea getTextArea() {
-		return textArea;
-	}
 }

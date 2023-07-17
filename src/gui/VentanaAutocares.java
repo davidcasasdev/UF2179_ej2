@@ -24,6 +24,7 @@ import javax.swing.border.EmptyBorder;
 import clases.Autocar;
 import net.miginfocom.swing.MigLayout;
 import javax.swing.JScrollPane;
+import javax.swing.JComboBox;
 
 public class VentanaAutocares extends JFrame {
 
@@ -34,7 +35,7 @@ public class VentanaAutocares extends JFrame {
 	private JTextField txtKms;
 	
 	private ArrayList<Autocar> listaAutocares;
-	private JSpinner spinner;
+	private JComboBox spinner;
 	private JTextArea textArea;
 
 	/**
@@ -108,9 +109,13 @@ public class VentanaAutocares extends JFrame {
 		JLabel lblNewLabel_4 = new JLabel("Plazas:");
 		contentPane.add(lblNewLabel_4, "cell 3 3");
 		
-		spinner = new JSpinner();
-		spinner.setModel(new SpinnerNumberModel(30, 1, 80, 1));
+		spinner = new JComboBox();
 		contentPane.add(spinner, "cell 4 3");
+		
+		for (int i=1;i<=80;i++) {
+			spinner.addItem(i);
+		}
+		spinner.setSelectedIndex(29);
 		
 		JPanel panel = new JPanel();
 		contentPane.add(panel, "cell 0 4 5 1,grow");
@@ -158,7 +163,7 @@ public class VentanaAutocares extends JFrame {
 			String marca = txtMarca.getText();
 			String modelo = txtModelo.getText();
 			int km = Integer.parseInt(txtKms.getText());
-			int plazas = (Integer)spinner.getValue();
+			int plazas = (Integer) spinner.getSelectedItem();
 			
 			if (matricula == null || matricula.isBlank() ||
 					modelo == null || modelo.isBlank() ||

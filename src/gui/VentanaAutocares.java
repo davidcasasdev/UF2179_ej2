@@ -157,7 +157,7 @@ public class VentanaAutocares extends JFrame {
 	}
 
 	protected Autocar recogerDatos() {
-		try {
+//		try {
 			
 			String matricula = txtMatricula.getText();
 			String marca = txtMarca.getText();
@@ -178,13 +178,13 @@ public class VentanaAutocares extends JFrame {
 			Autocar ac= new Autocar(matricula, marca, modelo, km, plazas);
 			
 			return ac;
-		} catch(NumberFormatException e) {
-			JOptionPane.showMessageDialog(contentPane, 
-					"Debe introducir un número correcto en Kilómetros", 
-					"Error en los datos", 
-					JOptionPane.ERROR_MESSAGE);
-			return null;
-		}
+//		} catch(NumberFormatException e) {
+//			JOptionPane.showMessageDialog(contentPane, 
+//					"Debe introducir un número correcto en Kilómetros", 
+//					"Error en los datos", 
+//					JOptionPane.ERROR_MESSAGE);
+//			return null;
+//		}
 	}
 
 	protected void insertarAutocar(Autocar a) {
